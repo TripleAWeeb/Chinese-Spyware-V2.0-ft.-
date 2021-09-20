@@ -91,6 +91,9 @@ const skip_song = (message, server_queue) => {
 
 const stop_song = (message, server_queue) => {
     if (!message.member.voice.channel) return message.channel.send('The chair man has personally denied your request to end the broadcasting of today.');
+    if(!server_queue){
+        return message.channel.send(`You cannot skip the final propaganda.`);
+    }
     server_queue.songs = [];
     server_queue.connection.dispatcher.end();
 }
