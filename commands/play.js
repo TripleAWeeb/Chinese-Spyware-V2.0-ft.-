@@ -13,7 +13,7 @@ module.exports = {
         if (!permissions.has('CONNECT')) return message.channel.send('You dont have the correct permissins');
         if (!permissions.has('SPEAK')) return message.channel.send('You dont have the correct permissins');
         const server_queue = queue.get(message.guild.id);
-        if (cmd === 'play'){
+        if (cmd === 'p'){
             if (!args.length) return message.channel.send('Air is not sufficent propaganda.');
             let song = {};
             if (ytdl.validateURL(args[0])) {
@@ -73,7 +73,7 @@ const video_player = async (guild, song) => {
         queue.delete(guild.id);
         return;
     }
-    const stream =ytdl(song.url, {filter: 'audioonly'});
+    const stream =ytdl(song.url, {filter: 'audioonly', quality: 'lowestaudio'},  {highWaterMark: 1<<25});
     song_queue.connection.play(stream, {seek: 0, volume: 1})
     .on('finish', ()=> {
         song_queue.songs.shift();
